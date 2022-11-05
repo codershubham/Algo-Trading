@@ -1,5 +1,20 @@
 #indicators_calculation.py
 
+import talib
+from talib import MA_Type
+import yfinance as yf
+import pandas_ta as ta
+
+
+def calculate_macd():
+    # get ticker data
+    df = yf.Ticker('NTPC.NS').history(period='1y')[map(str.title, ['open', 'close', 'low', 'high', 'volume'])]
+    # calculate MACD values
+    df.ta.macd(close='close', fast=12, slow=26, append=True)
+    # Force lowercase (optional)
+    df.columns = [x.lower() for x in df.columns]
+    return df
+
 def calculate_sma(period, list_of_price):
     sum = 0
     if period > len(list_of_price):
@@ -22,7 +37,3 @@ def calculate_ema(period, list_of_price, smoothing, first_day_ema):
         ema_prev = ema_current
     return ema_current
 
-
-def calculate_macd(slow_ma_period, fast_ma_period, signal_period, list_of_price):
-
-    return
