@@ -2,13 +2,18 @@ from indicators import *
 from plot import *
 from sendmail import *
 import time
+import sys
+
 
 DEPLOY_DIR_PATH="E:\AlgoTrading\Stock-Market\deploy\list-of-stock"
+EXPORTED_FILES_DIR_PATH="E:\AlgoTrading\Stock-Market\\tests\\"
 stock_list = []
+DEBUG_MODE = False
+
 
 def check_trigger_for_buy(stock):
+    print("stock", stock)
     df = calculate_macd(stock)
-    #print(df)
     df_last_2 = df.tail(2)
     # if macd histogram last day is -ve and today is +ve and macd today is greater than macd signal
     if ( 
@@ -16,7 +21,20 @@ def check_trigger_for_buy(stock):
             df_last_2.at[df_last_2.index[1], 'macdh_12_26_9'] > 0 and 
             df_last_2.at[df_last_2.index[1], 'macd_12_26_9'] >  df_last_2.at[df_last_2.index[1], 'macds_12_26_9']
         ):
-            send_mail(stock)
+            send_mail(stock, "buy")
+
+
+def check_trigger_for_sell(stock):
+    df = calculate_macd(stock)
+    #print(df)
+    df_last_2 = df.tail(2)
+    # if macd histogram last day is -ve and today is +ve and macd today is greater than macd signal
+    if (
+            df_last_2.at[df_last_2.index[0], 'macdh_12_26_9'] > 0 and
+            df_last_2.at[df_last_2.index[1], 'macdh_12_26_9'] < 0 and
+            df_last_2.at[df_last_2.index[1], 'macd_12_26_9'] <  df_last_2.at[df_last_2.index[1], 'macds_12_26_9']
+        ):
+            send_mail(stock, "sell")
 
 
 def load_stocks_list():
@@ -27,11 +45,18 @@ def load_stocks_list():
 
 
 if __name__ == "__main__":
+    if DEBUG_MODE:
+        df = yf.Ticker('FAZE3AUTO.BO').history(period='1y')[map(str.title, ['open', 'close', 'low', 'high', 'volume'])]
+        df.to_csv(EXPORTED_FILES_DIR_PATH + 'faze2auto.csv')
+        sys.exit()
+
     load_stocks_list() 
     print(stock_list)
     while True:
+        print("scanning stocks list")
         for stock in stock_list:
+            print(stock)
             check_trigger_for_buy(stock)
+            check_trigger_for_sell(stock)
         time.sleep(60*60*2) 
-    #df.to_csv('dataframe.csv')
     #create_plot(df)
