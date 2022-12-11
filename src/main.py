@@ -60,9 +60,10 @@ def load_stocks_list():
 if __name__ == "__main__":
     if DEBUG_MODE:
         # By default it is FAZE3AUTO.BO, change it to debug
-        df = yf.Ticker('FAZE3AUTO.BO').history(period='1y')[map(str.title, ['open', 'close', 'low', 'high', 'volume'])]
-        df.to_csv(EXPORTED_FILES_DIR_PATH + 'faze2auto.csv')
-        sys.exit()
+        #df = yf.Ticker('FAZE3AUTO.BO').history(period='1y')[map(str.title, ['open', 'close', 'low', 'high', 'volume'])]
+        #df.to_csv(EXPORTED_FILES_DIR_PATH + 'faze2auto.csv')
+        #sys.exit()
+        calculate_heikin_ashi("RELIANCE.NS")
 
     load_stocks_list() 
     print(holdings_list)

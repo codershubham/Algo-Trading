@@ -3,6 +3,7 @@
 import talib
 from talib import MA_Type
 import yfinance as yf
+#from plot import *
 import pandas_ta as ta
 #import pandas as pd
 
@@ -15,6 +16,13 @@ def calculate_macd(ticker):
     # Force lowercase (optional)
     df.columns = [x.lower() for x in df.columns]
     return df
+
+
+def calculate_heikin_ashi(ticker):
+    #df = yf.Ticker(ticker).history(period='1y')[map(str.title, ['open', 'close', 'low', 'high', 'volume'])]
+    #df = df.ta.ha(open=df["open"], high=df["high"], low=df["low"], close=df["close"])
+    #create_plot(df)
+    return
 
 
 def calculate_sma(period, list_of_price):
