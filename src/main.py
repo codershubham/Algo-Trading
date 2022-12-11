@@ -71,44 +71,55 @@ if __name__ == "__main__":
         print("scanning stocks in holding list")
         messege_buy = ''
         messege_sell = ''
+        any_stock_to_buy = False
+        any_stock_to_sell = False
+
+        messege_buy = "List of stocks to buy from holdings:-\n"
+        messege_sell = "List of stocks to sell from holdings:-\n"
         for stock in holdings_list:
             print(stock)
-            messege_buy = "List of stocks to buy from holdings:-\n"
-            messege_sell = "List of stocks to sell from holdings:-\n"
             try:
                 if check_trigger_for_buy(stock):
                     messege_buy += stock + "\n"
+                    any_stock_to_buy = True
                 if check_trigger_for_sell(stock):
                     messege_sell += stock + "\n"
+                    any_stock_to_sell = True
             except IndexError:
                 print("Data for " + stock + " doesn't exist")
             except Exception as ex:
                 print("some error occured", ex)
 
         if SEND_NOTIFICATION: 
-            send_mail(messege_buy)
-            send_mail(messege_sell)
+            if any_stock_to_buy:
+                send_mail(messege_buy)
+                any_stock_to_buy = False
+            if any_stock_to_sell:
+                send_mail(messege_sell)
+                any_stock_to_sell = False
 
         print("scanning stocks in watchlist")
-        messege_buy = ''
-        messege_sell = ''
+        messege_buy = "List of stocks to buy from watchlists :-\n"
+        messege_sell = "List of stocks to sell from watchlists :-\n"
         for stock in watchlist:
             print(stock)
-            messege_buy = "List of stocks to buy from watchlists :-\n"
-            messege_sell = "List of stocks to sell from watchlists :-\n"
             try:
                 if check_trigger_for_buy(stock):
                     messege_buy += stock + "\n"
+                    any_stock_to_buy = True
                 if check_trigger_for_sell(stock):
                     messege_sell += stock + "\n"
+                    any_stock_to_sell = True
             except IndexError:
                 print("Data for " + stock + " doesn't exist")
             except Exception as ex:
                 print("some error occured", ex)
 
         if SEND_NOTIFICATION:
-            send_mail(messege_buy)
-            send_mail(messege_sell)
+            if any_stock_to_buy:
+                send_mail(messege_buy)
+            if any_stock_to_sell:
+                send_mail(messege_sell)
 
         time.sleep(60*60*24) 
     #create_plot(df)
