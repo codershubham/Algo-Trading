@@ -5,9 +5,9 @@ import time
 import sys
 
 
-HOLDINGS_PATH="E:\AlgoTrading\Stock-Market\deploy\list-of-holdings"
-WATCHLIST_PATH="E:\AlgoTrading\Stock-Market\deploy\\watchlist"
-EXPORTED_FILES_DIR_PATH="E:\AlgoTrading\Stock-Market\\tests\\"
+HOLDINGS_PATH="..\deploy\list-of-holdings"
+WATCHLIST_PATH="..\deploy\\watchlist"
+EXPORTED_FILES_DIR_PATH=".\tests"
 holdings_list = []
 watchlist = []
 DEBUG_MODE = False
