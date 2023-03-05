@@ -18,4 +18,4 @@ Automation to track stocks for buy and sell based on certain triggers and get no
 * Goto src folder and execute main.py script.
 
 
-For any query please feel free to reach out on shubhamjain@gmail.com
+For any query or suggestions please feel free to reach out on shubhamjain@gmail.com
