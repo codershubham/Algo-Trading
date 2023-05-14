@@ -4,6 +4,9 @@ from sendmail import *
 import time
 from logger import *
 from configparser import ConfigParser
+import sys
+
+
 EXPORTED_FILES_DIR_PATH=".\\tests"
 holdings_list = []
 watchlist = []
@@ -33,11 +36,17 @@ if __name__ == "__main__":
             #df.to_csv(EXPORTED_FILES_DIR_PATH + 'faze2auto.csv')
             #sys.exit()
             pass
-        
-        config = ConfigParser()
-        config.read('config.ini')
-        watchlists_path = config.get('PATHS', 'watchlist_path', raw=True)
-        holdings_path = config.get('PATHS', 'holdings_path', raw=True)
+       
+        # Load Configuration
+        try:
+            config = ConfigParser()
+            config.read('config.ini')
+            watchlists_path = config.get('PATHS', 'watchlist_path', raw=True)
+            holdings_path = config.get('PATHS', 'holdings_path', raw=True)
+        except ex:
+            print("Unable to load configuration", ex)
+            sys.exit(1)
+
         load_stocks_list(watchlists_path, holdings_path) 
         print(holdings_list)
         print(watchlist)
