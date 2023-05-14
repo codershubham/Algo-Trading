@@ -1,7 +1,5 @@
 #indicators_calculation.py
 
-import talib
-from talib import MA_Type
 import yfinance as yf
 #from plot import *
 import pandas_ta as ta

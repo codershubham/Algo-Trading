@@ -5,7 +5,7 @@ Automation to track stocks for buy and sell based on certain triggers and get no
 
 # How to change list of stocks to watch?
 
-* There are two kind of list, one is holdings and other one is watchlist so you will get email notifications for both of them seperately.
+* There are two kind of list, one is holdings and other one is watchlist under deploy directory, so you will get email notifications for both of them seperately.
 * Now to change the list you need to first go to this website https://finance.yahoo.com/ then search for the company you want to watch for eg. Reliance, then check the ticker for this company which is RELIANCE.BO or RELIANCE.NS for BSE and NSE respectively.
 * Then add this ticker to the list(each ticker should be in new line).
 
