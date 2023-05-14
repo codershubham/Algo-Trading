@@ -3,9 +3,7 @@ from plot import *
 from sendmail import *
 import time
 from logger import *
-
-HOLDINGS_PATH="..\deploy\list-of-holdings"
-WATCHLIST_PATH="..\deploy\\watchlist"
+from configparser import ConfigParser
 EXPORTED_FILES_DIR_PATH=".\\tests"
 holdings_list = []
 watchlist = []
@@ -13,15 +11,15 @@ DEBUG_MODE = False
 SEND_NOTIFICATION=True
 
 logObject = Logger.getObject("main").logger
-def load_stocks_list():
+def load_stocks_list(watchlist_path, holdings_path):
     logObject.info("loading holdings : ")
-    myfile= open( HOLDINGS_PATH, "r" )
+    myfile= open( holdings_path, "r" )
     for x in myfile:
         holdings_list.append(x.strip())
     myfile.close()
 
     logObject.info("loading watchlist : ")
-    myfile= open( WATCHLIST_PATH, "r" )
+    myfile= open( watchlist_path, "r" )
     for x in myfile:
         watchlist.append(x.strip())
     myfile.close()
@@ -35,9 +33,14 @@ if __name__ == "__main__":
             #df.to_csv(EXPORTED_FILES_DIR_PATH + 'faze2auto.csv')
             #sys.exit()
             pass
-
-        load_stocks_list() 
+        
+        config = ConfigParser()
+        config.read('config.ini')
+        watchlists_path = config.get('PATHS', 'watchlist_path', raw=True)
+        holdings_path = config.get('PATHS', 'holdings_path', raw=True)
+        load_stocks_list(watchlists_path, holdings_path) 
         print(holdings_list)
+        print(watchlist)
         while True:
             logObject.info('scanning stocks in holding list')
 
